@@ -70,7 +70,7 @@ client.Dispatcher.on("MESSAGE_CREATE", e => {
 client.Dispatcher.on("MESSAGE_CREATE", e => {
   if (e.message.content == "TEST")
     {
-        PImage.encodePNG(Board, fs.createWriteStream("out.png"), function(err) {
+        PImage.encodePNG(newGame.board, fs.createWriteStream("out.png"), function(err) {
             console.log("Wrote to out.png");
         });
     }
@@ -109,6 +109,7 @@ function game(_user1, _user2)
     this.turn = 1;
     this.blackPiece = [];
     this.whitePiece = [];
+    this.board = PImage.make(673,706);
 
     this.init = function()
     {
@@ -239,7 +240,8 @@ function game(_user1, _user2)
 
     this.draw = function()
     {
-        var ctx = Board.getContext("2d");
+        var ctx = this.board.getContext("2d");
+        ctx.drawImage(Board,0,0);
         for(var i = 0; i < this.whitePiece.length; i++)
         {
             console.log(this.whitePiece[0].id);
