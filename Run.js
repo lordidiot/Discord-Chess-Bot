@@ -91,6 +91,7 @@ client.Dispatcher.on("MESSAGE_CREATE", e => {
             endPos += columnAlphaToInt(str.charAt(7));
 
             newGame.user1 = e.message.author;
+            newGame.user2 = e.message.author;
             newGame.makeMove(e.message.author, startPos, endPos);
         }
     }
@@ -164,10 +165,10 @@ function game(_user1, _user2)
                 }
                 else
                 {
-                    if(i >= this.whitePiece.length)
+                    if(i >= this.whitePiece.length-1)
                     {
-                        console.log("Beep Boop. Line 148.");
-                        break;
+                        console.log("Invalid Start Pos! Line 202. Current turn : White");
+                        return false;
                     }
                     i++;
                 }
@@ -177,10 +178,12 @@ function game(_user1, _user2)
                 this.turn++;
                 console.log("Move made!");
                 this.draw();
+                return true;
             }
             else
             {
                 console.log("Beep Boop. Invalid move.");
+                return false;
             }
         }
         else if (this.turn%2==0 && this.user2.username==user.username)
@@ -196,10 +199,26 @@ function game(_user1, _user2)
                 }
                 else
                 {
+                    if(i >= this.blackPiece.length-1)
+                    {
+                        console.log("Invalid Start Pos! Line 202. Current turn : Black");
+                        return false;
+                    }
                     i++;
                 }
             }
-            this.move(this.blackPiece[i], endPos);
+            if(this.move(this.blackPiece[i], endPos)==true)
+            {
+                this.turn++;
+                console.log("Move made!");
+                this.draw();
+                return true;
+            }
+            else
+            {
+                console.log("Beep Boop. Invalid move.");
+                return false;
+            }
         }
     }
 
@@ -212,6 +231,7 @@ function game(_user1, _user2)
             {
                 if(  ((Math.floor(endPos/10)-1)==piece.row) && ((endPos%10)==piece.column) )
                 {
+                    //forward 1 move
                     for(var i = 0; i < this.whitePiece.length; i++)
                     {
                         if(this.whitePiece[i].row==(Math.floor(endPos/10))&& (this.whitePiece[i].column == endPos%10) )
@@ -227,6 +247,36 @@ function game(_user1, _user2)
                         }
                     }
                     piece.row += 1; //move forward
+                    piece.unmoved = false;
+                    return true;
+                }
+                else if(((Math.floor(endPos/10)-2)==piece.row) && ((endPos%10)==piece.column) && piece.unmoved==true)
+                {
+                    //forward 2 move at start
+                    for(var i = 0; i < this.whitePiece.length; i++)
+                    {
+                        if(this.whitePiece[i].row==(Math.floor(endPos/10))&& (this.whitePiece[i].column == endPos%10) )
+                        {
+                            return false;
+                        }
+                        else if(this.whitePiece[i].row==(Math.floor(endPos/10))-1&& (this.whitePiece[i].column == endPos%10))
+                        {
+                            return false;
+                        }
+                    }
+                    for(var i = 0; i < this.blackPiece.length; i++)
+                    {
+                        if(this.blackPiece[i].row==(Math.floor(endPos/10))&& (this.blackPiece[i].column == endPos%10) )
+                        {
+                            return false;
+                        }
+                        else if(this.blackPiece[i].row==(Math.floor(endPos/10))-1&& (this.blackPiece[i].column == endPos%10))
+                        {
+                            return false;
+                        }
+                    }
+                    piece.row += 2; //move forward
+                    piece.unmoved = false;
                     return true;
                 }
             }
@@ -235,6 +285,59 @@ function game(_user1, _user2)
         else
         {
             //black
+            if(piece.id=="P")
+            {
+                if(  ((Math.floor(endPos/10)+1)==piece.row) && ((endPos%10)==piece.column) )
+                {
+                    //forward 1 move
+                    for(var i = 0; i < this.whitePiece.length; i++)
+                    {
+                        if(this.whitePiece[i].row==(Math.floor(endPos/10))&& (this.whitePiece[i].column == endPos%10) )
+                        {
+                            return false;
+                        }
+                    }
+                    for(var i = 0; i < this.blackPiece.length; i++)
+                    {
+                        if(this.blackPiece[i].row==(Math.floor(endPos/10))&& (this.blackPiece[i].column == endPos%10) )
+                        {
+                            return false;
+                        }
+                    }
+                    piece.row -= 1; //move forward
+                    piece.unmoved = false;
+                    return true;
+                }
+                else if(((Math.floor(endPos/10)+2)==piece.row) && ((endPos%10)==piece.column) && piece.unmoved==true)
+                {
+                    //forward 2 move at start
+                    for(var i = 0; i < this.whitePiece.length; i++)
+                    {
+                        if(this.whitePiece[i].row==(Math.floor(endPos/10))&& (this.whitePiece[i].column == endPos%10) )
+                        {
+                            return false;
+                        }
+                        else if(this.whitePiece[i].row==(Math.floor(endPos/10))+1&& (this.whitePiece[i].column == endPos%10))
+                        {
+                            return false;
+                        }
+                    }
+                    for(var i = 0; i < this.blackPiece.length; i++)
+                    {
+                        if(this.blackPiece[i].row==(Math.floor(endPos/10))&& (this.blackPiece[i].column == endPos%10) )
+                        {
+                            return false;
+                        }
+                        else if(this.blackPiece[i].row==(Math.floor(endPos/10))+1&& (this.blackPiece[i].column == endPos%10))
+                        {
+                            return false;
+                        }
+                    }
+                    piece.row -= 2; //move forward
+                    piece.unmoved = false;
+                    return true;
+                }
+            }
         }
     }
 
@@ -669,7 +772,7 @@ function columnAlphaToInt(strin)
         case "f" :
             return 7;
             break;
-        case "f" :
+        case "h" :
             return 8;
             break;
     }
