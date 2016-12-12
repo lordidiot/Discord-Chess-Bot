@@ -18,3 +18,12 @@ Discord Bot using Discordie that can run chess in Discord servers
   
     ![ss2](https://raw.githubusercontent.com/lordidiot/Discord-Chess-Bot/master/stuff/pingpong.PNG)
   - If the bot replies properly, the set up is finished!
+
+
+## Usage
+
+| Command | Description
+|---------|-------------|
+| `!chess start` | Sets Player 1 for a new Chess Game |
+| `!chess join` | Joins the Chess Game, should only be done after `!chess start` has been used |
+| `!move <startpos><endpos>` | e.g. `move g2g4` to move a White Pawn |
