@@ -26,4 +26,4 @@ Discord Bot using [Discordie](https://github.com/qeled/discordie) that can run c
 |---------|-------------|
 | `!chess start` | Sets Player 1 for a new Chess Game |
 | `!chess join` | Joins the Chess Game, should only be done after `!chess start` has been used |
-| `!move <startpos><endpos>` | e.g. `move g2g4` to move a White Pawn |
+| `move <startpos><endpos>` | e.g. `move g2g4` to move a White Pawn |
