@@ -43,13 +43,13 @@ var p1;
 var p2;
 
 //bot setup
-client.connect({ token: "MjU0NTU0NTk4NzM0NDMwMjA4.CyQv9w.FLhHadnk_QjsDhX6ewPqOXQCP2c" });
+client.connect({ token: "INSERT TOKEN HERE" });
 
 client.Dispatcher.on("GATEWAY_READY", e => {
   console.log("Connected as: " + client.User.username);
 
   //change pp
-  client.User.setAvatar(fs.readFileSync("denking.png"));
+  //client.User.setAvatar(fs.readFileSync("denking.png"));
 
   //load images
   console.log("Loading game images ... ");
