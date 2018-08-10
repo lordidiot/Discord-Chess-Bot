@@ -1,3 +1,5 @@
+#It is broken whoops
+
 # Discord-Chess-Bot
 Discord Bot using [Discordie](https://github.com/qeled/discordie) that can run chess in Discord servers
 

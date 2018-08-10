@@ -43,7 +43,7 @@ var p1;
 var p2;
 
 //bot setup
-client.connect({ token: "INSERT TOKEN HERE" });
+client.connect({ token: "MjU0NTU0NTk4NzM0NDMwMjA4.Dk8fcQ.9-R8UgIro6WSlyAMwTsbjhXzNss" });
 
 client.Dispatcher.on("GATEWAY_READY", e => {
   console.log("Connected as: " + client.User.username);
@@ -89,7 +89,7 @@ client.Dispatcher.on("MESSAGE_CREATE", e => {
             newGame = new game(p1,p2);
             newGame.init();
             newGame.draw();
-            setTimeout(function() { PImage.encodePNG(newGame.board, fs.createWriteStream("out.png"), function(err) {
+            setTimeout(function() { PImage.encodePNGToStream(newGame.board, fs.createWriteStream("out.png"), function(err) {
                 e.message.channel.uploadFile("out.png");
                 e.message.channel.sendMessage("Game Prepared!");
             }); }, 500);
@@ -100,7 +100,7 @@ client.Dispatcher.on("MESSAGE_CREATE", e => {
 client.Dispatcher.on("MESSAGE_CREATE", e => {
   if (e.message.content == "TEST")
     {
-        PImage.encodePNG(newGame.board, fs.createWriteStream("out.png"), function(err) {
+        PImage.encodePNGToStream(newGame.board, fs.createWriteStream("out.png"), function(err) {
             console.log("Wrote to out.png");
         });
     }
@@ -122,7 +122,7 @@ client.Dispatcher.on("MESSAGE_CREATE", e => {
 
             if(newGame.makeMove(e.message.author, startPos, endPos)==true)
             {
-                setTimeout(function() { PImage.encodePNG(newGame.board, fs.createWriteStream("out.png"), function(err) {
+                setTimeout(function() { PImage.encodePNGToStream(newGame.board, fs.createWriteStream("out.png"), function(err) {
                     e.message.channel.uploadFile("out.png");
                     if(newGame.winlose()==1)
                     {
@@ -1619,7 +1619,7 @@ function piece(_id, _row, _column)
 
 function loadImages()
 {
-    PImage.decodePNG(fs.createReadStream("Board.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("Board.png"),
         function(bitmap)
         {
             Board.getContext("2d").fillStyle = "#FFFFFF";
@@ -1630,7 +1630,7 @@ function loadImages()
 
 
     //var atx = wPawn.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wPawn.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wPawn.png"),
         function(bitmap)
         {
             wPawn.getContext("2d").drawImage(bitmap,0,0);
@@ -1638,7 +1638,7 @@ function loadImages()
     )
 
     //var btx = wRook.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wRook.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wRook.png"),
         function(bitmap)
         {
             wRook.getContext("2d").drawImage(bitmap,0,0);
@@ -1646,7 +1646,7 @@ function loadImages()
     )
 
     //var ctx = wBishop.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wBishop.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wBishop.png"),
         function(bitmap)
         {
             wBishop.getContext("2d").drawImage(bitmap,0,0);
@@ -1654,7 +1654,7 @@ function loadImages()
     )
 
     //var dtx = wKnight.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wKnight.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wKnight.png"),
         function(bitmap)
         {
             wKnight.getContext("2d").drawImage(bitmap,0,0);
@@ -1662,7 +1662,7 @@ function loadImages()
     )
 
     //var  = wQueen.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wQueen.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wQueen.png"),
         function(bitmap)
         {
             wQueen.getContext("2d").drawImage(bitmap,0,0);
@@ -1670,7 +1670,7 @@ function loadImages()
     )
 
 //    ctx = wKing.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wKing.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wKing.png"),
         function(bitmap)
         {
             wKing.getContext("2d").drawImage(bitmap,0,0);
@@ -1678,7 +1678,7 @@ function loadImages()
     )
 
 //    ctx = bPawn.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bPawn.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bPawn.png"),
         function(bitmap)
         {
             bPawn.getContext("2d").drawImage(bitmap,0,0);
@@ -1686,7 +1686,7 @@ function loadImages()
     )
 
 //    ctx = bRook.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bRook.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bRook.png"),
         function(bitmap)
         {
             bRook.getContext("2d").drawImage(bitmap,0,0);
@@ -1694,7 +1694,7 @@ function loadImages()
     )
 
 //    ctx = bBishop.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bBishop.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bBishop.png"),
         function(bitmap)
         {
             bBishop.getContext("2d").drawImage(bitmap,0,0);
@@ -1702,7 +1702,7 @@ function loadImages()
     )
 
 //    ctx = bKnight.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bKnight.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bKnight.png"),
         function(bitmap)
         {
             bKnight.getContext("2d").drawImage(bitmap,0,0);
@@ -1710,7 +1710,7 @@ function loadImages()
     )
 
     //ctx = bQueen.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bQueen.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bQueen.png"),
         function(bitmap)
         {
             bQueen.getContext("2d").drawImage(bitmap,0,0);
@@ -1718,7 +1718,7 @@ function loadImages()
     )
 
     //ctx = bKing.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bKing.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bKing.png"),
         function(bitmap)
         {
             bKing.getContext("2d").drawImage(bitmap,0,0);
@@ -1737,7 +1737,7 @@ function loadImages1()
 
 
     //var atx = wPawn.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wPawn.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wPawn.png"),
         function(bitmap)
         {
             wPawn1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1747,7 +1747,7 @@ function loadImages1()
     )
 
     //var btx = wRook.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wRook.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wRook.png"),
         function(bitmap)
         {
             wRook1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1757,7 +1757,7 @@ function loadImages1()
     )
 
     //var ctx = wBishop.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wBishop.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wBishop.png"),
         function(bitmap)
         {
             wBishop1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1767,7 +1767,7 @@ function loadImages1()
     )
 
     //var dtx = wKnight.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wKnight.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wKnight.png"),
         function(bitmap)
         {
             wKnight1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1777,7 +1777,7 @@ function loadImages1()
     )
 
     //var  = wQueen.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wQueen.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wQueen.png"),
         function(bitmap)
         {
             wQueen1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1787,7 +1787,7 @@ function loadImages1()
     )
 
 //    ctx = wKing.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("wKing.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("wKing.png"),
         function(bitmap)
         {
             wKing1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1797,7 +1797,7 @@ function loadImages1()
     )
 
 //    ctx = bPawn.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bPawn.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bPawn.png"),
         function(bitmap)
         {
             bPawn1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1807,7 +1807,7 @@ function loadImages1()
     )
 
 //    ctx = bRook.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bRook.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bRook.png"),
         function(bitmap)
         {
             bRook1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1817,7 +1817,7 @@ function loadImages1()
     )
 
 //    ctx = bBishop.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bBishop.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bBishop.png"),
         function(bitmap)
         {
             bBishop1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1827,7 +1827,7 @@ function loadImages1()
     )
 
 //    ctx = bKnight.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bKnight.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bKnight.png"),
         function(bitmap)
         {
             bKnight1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1837,7 +1837,7 @@ function loadImages1()
     )
 
     //ctx = bQueen.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bQueen.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bQueen.png"),
         function(bitmap)
         {
             bQueen1.getContext("2d").fillStyle = "#FFFFFF";
@@ -1847,7 +1847,7 @@ function loadImages1()
     )
 
     //ctx = bKing.getContext("2d");
-    PImage.decodePNG(fs.createReadStream("bKing.png"),
+    PImage.decodePNGFromStream(fs.createReadStream("bKing.png"),
         function(bitmap)
         {
             bKing1.getContext("2d").fillStyle = "#FFFFFF";
